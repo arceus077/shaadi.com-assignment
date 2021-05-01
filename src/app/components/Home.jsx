@@ -18,7 +18,7 @@ class Home extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount() { //initial api call for data
         const { page, limit, items } = this.state;
         axios.get(`https://picsum.photos/v2/list?page=${page}&limit=${limit}`)
           .then(res => {
@@ -27,7 +27,7 @@ class Home extends React.Component {
         })
     }
 
-    fetchMoreData = () => {
+    fetchMoreData = () => { // when reach end call again for data
         const { page, limit, items } = this.state;
         axios.get(`https://picsum.photos/v2/list?page=${page}&limit=${limit}`)
           .then(res => {
@@ -36,7 +36,7 @@ class Home extends React.Component {
                 items: [ ...items, ...newItems],
                 page: page + 1,
             }, () => {
-                if(items.length >= 500) {
+                if(items.length >= 500) { // fetching only data up till 500 entries
                     this.setState({ hasMore: false });
                 }
             });
@@ -45,7 +45,7 @@ class Home extends React.Component {
 
     logOutHandler = () => {
         localStorage.setItem("isAuthorised", false);
-        this.props.history.push('login');
+        this.props.history.push('login'); //Route back to login page
     };
 
     render() {
@@ -57,13 +57,14 @@ class Home extends React.Component {
 
         return (
             <div>
+                {/* Header Component */}
             <AppBar position="static">
-            <ToolbarComponent>
-                <TypographyComponent variant="h6">
-                Home
-                </TypographyComponent>
-                <LogOutButton onClick={this.logOutHandler}>Log Out</LogOutButton>
-            </ToolbarComponent>
+                <ToolbarComponent>
+                    <TypographyComponent variant="h6">
+                    Home
+                    </TypographyComponent>
+                    <LogOutButton onClick={this.logOutHandler}>Log Out</LogOutButton>
+                </ToolbarComponent>
             </AppBar>
                 <InfiniteScroll
                     dataLength={items.length}
@@ -75,6 +76,7 @@ class Home extends React.Component {
                         <Container key={`${value.id} ${value.url}`}>
                             <SubContainer key={`${value.id} ${value.index}`}>
                                 <img
+                                    alt={`${value.author} Detail`}
                                     style={{width:'400px', height: '300px', borderRadius: '20px 20px 10px 10px'}}
                                     src={value.download_url}
                                 />

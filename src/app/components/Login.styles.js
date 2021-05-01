@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { TextField, withStyles } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { green, blue } from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 
 const Container = styled.div`
